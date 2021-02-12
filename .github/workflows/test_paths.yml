@@ -3,8 +3,12 @@ name: test-paths
 on: workflow_dispatch
 
 jobs:
-    format-checking:
+    test-installations:
         runs-on: ubuntu-latest
+        container:
+            image: glotzerlab/software:beta-nompi
+            # Necessary to have proper permissions for the following steps
+            options: --user 1001
         steps:
             - name: extend path
               run : echo "$HOME/.local/bin" >> $GITHUB_PATH
