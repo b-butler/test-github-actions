@@ -12,12 +12,6 @@ jobs:
         steps:
             - name: extend path
               run : echo "$HOME/.local/bin" >> $GITHUB_PATH
-            - name: print info
-              run: |
-                  echo "$PATH"
-                  ls "$HOME"
-                  echo "$HOME"
-                  echo "$PATH"
             - uses: actions/checkout@v2
             - name: install stuff
               run: |
@@ -26,3 +20,9 @@ jobs:
               run: |
                   python3 -m venv "${HOME}/test-env"
                   . "${HOME}/test-env/bin/activate"
+            - name: see if I am in the correct virtual env
+              run: |
+                  echo $PATH
+                  which python
+                  python -m pip install networkx
+                  python -c 'import networkx; print(f"networkx {networkx.__version__}")'
