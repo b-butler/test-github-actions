@@ -25,5 +25,6 @@ jobs:
                   python3 -m pip install signac --progress-bar off 
             - name: attempt to run things
               run: |
-                  signac
                   python3 -m virtualenv ./test-env
+                  virtualenv ./test-env-2
+                  signac
