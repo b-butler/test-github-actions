@@ -22,6 +22,7 @@ jobs:
                   . "${HOME}/test-env/bin/activate"
             - name: see if I am in the correct virtual env
               run: |
+                  . "${HOME}/test-env/bin/activate"
                   echo $PATH
                   which python
                   python -m pip install networkx
