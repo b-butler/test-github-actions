@@ -24,5 +24,5 @@ jobs:
                   python3 -m pip install virtualenv --progress-bar off --user -U
             - name: attempt to run things
               run: |
-                  virtualenv ./test-env-2
-                  python3 -m virtualenv ./test-env
+                  python3 -m venv "${HOME}/test-env"
+                  . "${HOME}/test-env/bin/activate"
