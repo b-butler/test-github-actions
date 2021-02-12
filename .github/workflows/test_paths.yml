@@ -7,5 +7,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - run: echo "$PATH"
-            - run: echo {{ github.workspace }}
+            - name: print info
+              run: |
+                  echo "$PATH"
+                  ls "$HOME"
+                  echo "$HOME"
+                  echo ${{ github.workspace }}
+                  PATH="${PATH}:${{ github.workspace }}:${HOME}/.local/bin"
+                  echo "$PATH"
+
