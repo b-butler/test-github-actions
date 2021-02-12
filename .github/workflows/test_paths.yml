@@ -5,6 +5,9 @@ on: workflow_dispatch
 jobs:
     format-checking:
         runs-on: ubuntu-latest
+        env:
+            PATH: "${PATH}:${HOME}/.local/bin"
+
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-python@v2
@@ -14,7 +17,6 @@ jobs:
                   ls "$HOME"
                   echo "$HOME"
                   echo ${{ github.workspace }}
-                  PATH="${PATH}:${{ github.workspace }}:${HOME}/.local/bin"
                   echo "$PATH"
 
             - name: install stuff
