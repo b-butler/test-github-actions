@@ -21,9 +21,8 @@ jobs:
             - uses: actions/checkout@v2
             - name: install stuff
               run: |
-                  python3 -m pip install virtualenv --progress-bar off
-                  python3 -m pip install signac --progress-bar off 
+                  python3 -m pip install virtualenv --progress-bar off --user -U
             - name: attempt to run things
               run: |
-                  python3 -m virtualenv ./test-env
                   virtualenv ./test-env-2
+                  python3 -m virtualenv ./test-env
