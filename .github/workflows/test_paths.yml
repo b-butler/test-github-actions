@@ -29,6 +29,6 @@ jobs:
                   python -c 'import networkx; print(f"networkx {networkx.__version__}")'
             - name: print directory structure
               run: |
-                  tree $HOME
-                  tree ${{ github.workspace }}/..
-                  tree ${{ github.workspace }}
+                  ls $HOME
+                  ls ${{ github.workspace }}/..
+                  ls ${{ github.workspace }}
