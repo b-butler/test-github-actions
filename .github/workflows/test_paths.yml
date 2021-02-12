@@ -19,7 +19,6 @@ jobs:
                   echo "$HOME"
                   echo "$PATH"
             - uses: actions/checkout@v2
-            - uses: actions/setup-python@v2
             - name: install stuff
               run: |
                   python3 -m pip install virtualenv --progress-bar off --user
