@@ -17,8 +17,8 @@ jobs:
                   path: main
             - name: check paths after checkout
               run: |
+                echo $HOME
                 ls $HOME
-                ls /github/workspace
             - name: see if I am in the correct virtual env
               run: |
                   . "${HOME}/test-env/bin/activate"
@@ -29,5 +29,4 @@ jobs:
             - name: print directory structure
               run: |
                   ls $HOME
-                  ls ${{ github.workspace }}
-                  ls ${{ github.workspace }}/main
+                  ls -a /__w/test-github-actions/test-github-actions
