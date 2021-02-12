@@ -10,16 +10,11 @@ jobs:
             # Necessary to have proper permissions for the following steps
             options: --user 1001
         steps:
-            - name: extend path
-              run : echo "$HOME/.local/bin" >> $GITHUB_PATH
-            - uses: actions/checkout@v2
-            - name: install stuff
-              run: |
-                  python3 -m pip install virtualenv --progress-bar off --user -U
             - name: attempt to run things
-              run: |
-                  python3 -m venv "${HOME}/test-env"
-                  . "${HOME}/test-env/bin/activate"
+              run: python3 -m venv "${HOME}/test-env"
+            - uses: actions/checkout@v2
+              with:
+                  path: main
             - name: see if I am in the correct virtual env
               run: |
                   . "${HOME}/test-env/bin/activate"
@@ -30,5 +25,5 @@ jobs:
             - name: print directory structure
               run: |
                   ls $HOME
-                  ls ${{ github.workspace }}/..
                   ls ${{ github.workspace }}
+                  ls ${{ github.workspace }}/main
