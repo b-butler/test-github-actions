@@ -27,3 +27,4 @@ jobs:
                   which python
                   python -m pip install networkx
                   python -c 'import networkx; print(f"networkx {networkx.__version__}")'
+                  cd ${{ github.workspace }}
