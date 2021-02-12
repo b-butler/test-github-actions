@@ -18,10 +18,7 @@ jobs:
             - name: check paths after checkout
               run: |
                 ls $HOME
-                ls /home/runner/work
-                ls ${{ github.workspace }}/../..
-                ls ${{ github.workspace }}/..
-                ls ${{ github.workspace }}
+                ls /github/workspace
             - name: see if I am in the correct virtual env
               run: |
                   . "${HOME}/test-env/bin/activate"
