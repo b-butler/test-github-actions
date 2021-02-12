@@ -5,20 +5,17 @@ on: workflow_dispatch
 jobs:
     format-checking:
         runs-on: ubuntu-latest
-        env:
-            PATH: "${PATH}:${HOME}/.local/bin"
-
         steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-python@v2
+            - name: extend path
+              run : echo "$HOME/.local/bin" >> $GITHUB_PATH
             - name: print info
               run: |
                   echo "$PATH"
                   ls "$HOME"
                   echo "$HOME"
-                  echo ${{ github.workspace }}
                   echo "$PATH"
-
+            - uses: actions/checkout@v2
+            - uses: actions/setup-python@v2
             - name: install stuff
               run: |
                   python3 -m pip install virtualenv --progress-bar off --user
