@@ -39,10 +39,10 @@ jobs:
                   # like most Python could
                   WORKSPACE: /__w/hoomdpy-addons/hoomdpy-addons/main
                   CONTAINER_PACKAGES: /opt/glotzerlab/lib/python3.6/site-packages
-                  VENV_DIR: "${HOME}/envs/test-env/lib/python3.6/site-packages"
+                  VENV_DIR: "${HOME}/test-env/lib/python3.6/site-packages"
                   PYTHONPATH_: "${VENV_DIR}:${CONTAINER_PACKAGES}"
               run: |
-                  . "${HOME}/envs/test-env/bin/activate"
+                  . "${HOME}/test-env/bin/activate"
                   cd "$WORKSPACE"
                   echo "$PYTHONPATH_"
                   ls "$CONTAINER_PACKAGES"
