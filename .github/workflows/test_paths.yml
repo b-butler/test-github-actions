@@ -30,3 +30,22 @@ jobs:
               run: |
                   ls $HOME
                   ls -a /__w/test-github-actions/test-github-actions
+            - name: Attempt to import hoomd
+              env:
+                  # This is where checkout@v2 will install hoomdpy-addons
+                  # https://github.community/t/docker-action-cant-create-folder-in-runners-home-directory/17816/3
+                  # This link helps to explain why. Ultimately due to where the
+                  # docker image mounts we can't use ${{ github.workspace }}
+                  # like most Python could
+                  WORKSPACE: /__w/hoomdpy-addons/hoomdpy-addons/main
+                  CONTAINER_PACKAGES: /opt/glotzerlab/lib/python3.6/site-packages
+                  VENV_DIR: "${HOME}/envs/test-env/lib/python3.6/site-packages"
+                  PYTHONPATH_: "${VENV_DIR}:${CONTAINER_PACKAGES}"
+              run: |
+                  . "${HOME}/envs/test-env/bin/activate"
+                  cd "$WORKSPACE"
+                  echo "$PYTHONPATH_"
+                  ls "$CONTAINER_PACKAGES"
+                  ls "$VENV_DIR"
+                  python3 -m pip install -U pip
+                  python3 -c "import hoomd; print(hoomd.version.version)"
