@@ -37,7 +37,7 @@ jobs:
                   # This link helps to explain why. Ultimately due to where the
                   # docker image mounts we can't use ${{ github.workspace }}
                   # like most Python could
-                  WORKSPACE: /__w/hoomdpy-addons/hoomdpy-addons/main
+                  WORKSPACE: /__w/test-github-actions/test-github-actions
                   CONTAINER_PACKAGES: /opt/glotzerlab/lib/python3.6/site-packages
                   VENV_DIR: "${HOME}/test-env/lib/python3.6/site-packages"
                   PYTHONPATH_: "${VENV_DIR}:${CONTAINER_PACKAGES}"
