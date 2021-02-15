@@ -44,8 +44,6 @@ jobs:
                   VENV_DIR: "test-env/lib/python3.6/site-packages"
               run: |
                   . "${HOME}/test-env/bin/activate"
-                  ls "$CONTAINER_PACKAGES"
-                  ls "$VENV_DIR"
                   cd "$WORKSPACE"
                   python3 -m pip install -U pip
                   PYTHONPATH="${HOME}/${VENV_DIR}:${CONTAINER_PACKAGES}" \
