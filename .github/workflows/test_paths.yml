@@ -51,6 +51,7 @@ jobs:
                   . "${HOME}/test-env/bin/activate"
                   cd "$WORKSPACE"
                   python3 -m pip install -U pip
+                  python3 -m pip install -r requirements.txt -U
                   PYTHONPATH="${HOME}/${VENV_DIR}:${CONTAINER_PACKAGES}" \
                     python3 -c "import hoomd; print(hoomd.version.version)"
 
