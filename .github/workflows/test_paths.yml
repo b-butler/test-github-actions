@@ -57,7 +57,9 @@ jobs:
 
             - name: Run Pytest
               run: |
-                  . "${HOME}/test-env/bin/activate"
                   cd "$WORKSPACE"
+                  python3 -m pytest
+                  echo "Succeeded initially ......."
+                  . "${HOME}/test-env/bin/activate"
                   PYTHONPATH="${HOME}/${VENV_DIR}:${CONTAINER_PACKAGES}" \
                     python3 -m pytest
