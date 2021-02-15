@@ -5,6 +5,17 @@ on: [push, workflow_dispatch]
 jobs:
     test-installations:
         runs-on: ubuntu-latest
+        env:
+            # This is where checkout@v2 will install hoomdpy-addons
+            # https://github.community/t/docker-action-cant-create-folder-in-runners-home-directory/17816/3
+            # This link helps to explain why. Ultimately due to where the
+            # docker image mounts we can't use ${{ github.workspace }}
+            # like most Python could
+            WORKSPACE: /__w/test-github-actions/test-github-actions
+            # Global container path
+            CONTAINER_PACKAGES: /opt/glotzerlab/lib/python3.6/site-packages
+            # Based off the $HOME directory
+            VENV_DIR: "test-env/lib/python3.6/site-packages"
         container:
             image: glotzerlab/software:beta-nompi
             # Necessary to have proper permissions for the following steps
@@ -21,9 +32,14 @@ jobs:
                 ls $HOME
             - name: see if I am in the correct virtual env
               run: |
-                  . "${HOME}/test-env/bin/activate"
-                  echo $PATH
+                  echo "Default Python version and location -----------------"
+                  python3 --version
                   which python
+                  . "${HOME}/test-env/bin/activate"
+                  echo "Venv Python version -----------------"
+                  python3 --version
+                  which python
+                  echo "Installing NetworkX and printing version............."
                   python -m pip install networkx
                   python -c 'import networkx; print(f"networkx {networkx.__version__}")'
             - name: print directory structure
@@ -31,20 +47,14 @@ jobs:
                   ls $HOME
                   ls -a /__w/test-github-actions/test-github-actions
             - name: Attempt to import hoomd
-              env:
-                  # This is where checkout@v2 will install hoomdpy-addons
-                  # https://github.community/t/docker-action-cant-create-folder-in-runners-home-directory/17816/3
-                  # This link helps to explain why. Ultimately due to where the
-                  # docker image mounts we can't use ${{ github.workspace }}
-                  # like most Python could
-                  WORKSPACE: /__w/test-github-actions/test-github-actions
-                  # Global container path
-                  CONTAINER_PACKAGES: /opt/glotzerlab/lib/python3.6/site-packages
-                  # Based off the $HOME directory
-                  VENV_DIR: "test-env/lib/python3.6/site-packages"
               run: |
                   . "${HOME}/test-env/bin/activate"
                   cd "$WORKSPACE"
                   python3 -m pip install -U pip
                   PYTHONPATH="${HOME}/${VENV_DIR}:${CONTAINER_PACKAGES}" \
                     python3 -c "import hoomd; print(hoomd.version.version)"
+
+            - name: Run Pytest
+                  . "${HOME}/test-env/bin/activate"
+                  cd "$WORKSPACE"
+                  python3 -m pytest
