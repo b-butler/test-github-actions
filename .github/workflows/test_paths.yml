@@ -11,7 +11,7 @@ jobs:
             # This link helps to explain why. Ultimately due to where the
             # docker image mounts we can't use ${{ github.workspace }}
             # like most Python could
-            WORKSPACE: /__w/test-github-actions/test-github-actions
+            WORKSPACE: /__w/test-github-actions/test-github-actions/main
             # Global container path
             CONTAINER_PACKAGES: /opt/glotzerlab/lib/python3.6/site-packages
             # Based off the $HOME directory
