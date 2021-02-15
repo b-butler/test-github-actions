@@ -14,52 +14,23 @@ jobs:
             WORKSPACE: /__w/test-github-actions/test-github-actions/main
             # Global container path
             CONTAINER_PACKAGES: /opt/glotzerlab/lib/python3.6/site-packages
-            # Based off the $HOME directory
-            VENV_DIR: "test-env/lib/python3.6/site-packages"
         container:
             image: glotzerlab/software:beta-nompi
             # Necessary to have proper permissions for the following steps
             options: --user 1001
         steps:
-            - name: attempt to run things
-              run: python3 -m venv "${HOME}/test-env"
             - uses: actions/checkout@v2
               with:
                   path: main
-            - name: check paths after checkout
-              run: |
-                echo $HOME
-                ls $HOME
-            - name: see if I am in the correct virtual env
+            - name: see if I can install as different user
               run: |
                   echo "Default Python version and location -----------------"
-                  python3 --version
-                  which python
-                  . "${HOME}/test-env/bin/activate"
-                  echo "Venv Python version -----------------"
                   python3 --version
                   which python
                   echo "Installing NetworkX and printing version............."
                   python -m pip install networkx
                   python -c 'import networkx; print(f"networkx {networkx.__version__}")'
-            - name: print directory structure
-              run: |
-                  ls $HOME
-                  ls -a /__w/test-github-actions/test-github-actions
-            - name: Attempt to import hoomd
-              run: |
-                  . "${HOME}/test-env/bin/activate"
-                  cd "$WORKSPACE"
-                  python3 -m pip install -U pip
-                  python3 -m pip install -r requirements.txt -U
-                  PYTHONPATH="${HOME}/${VENV_DIR}:${CONTAINER_PACKAGES}" \
-                    python3 -c "import hoomd; print(hoomd.version.version)"
-
             - name: Run Pytest
               run: |
                   cd "$WORKSPACE"
                   python3 -m pytest
-                  echo "Succeeded initially ......."
-                  . "${HOME}/test-env/bin/activate"
-                  PYTHONPATH="${HOME}/${VENV_DIR}:${CONTAINER_PACKAGES}" \
-                    python3 -m pytest
