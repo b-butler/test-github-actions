@@ -38,14 +38,15 @@ jobs:
                   # docker image mounts we can't use ${{ github.workspace }}
                   # like most Python could
                   WORKSPACE: /__w/test-github-actions/test-github-actions
+                  # Global container path
                   CONTAINER_PACKAGES: /opt/glotzerlab/lib/python3.6/site-packages
-                  VENV_DIR: "${HOME}/test-env/lib/python3.6/site-packages"
-                  PYTHONPATH_: "${VENV_DIR}:${CONTAINER_PACKAGES}"
+                  # Based off the $HOME directory
+                  VENV_DIR: "/test-env/lib/python3.6/site-packages"
               run: |
                   . "${HOME}/test-env/bin/activate"
-                  cd "$WORKSPACE"
-                  echo "$PYTHONPATH_"
                   ls "$CONTAINER_PACKAGES"
                   ls "$VENV_DIR"
+                  cd "$WORKSPACE"
                   python3 -m pip install -U pip
-                  python3 -c "import hoomd; print(hoomd.version.version)"
+                  PYTHONPATH="${HOME}${VENV_DIR}:${CONTAINER_PACKAGES}" \
+                    python3 -c "import hoomd; print(hoomd.version.version)"
