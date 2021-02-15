@@ -55,6 +55,7 @@ jobs:
                     python3 -c "import hoomd; print(hoomd.version.version)"
 
             - name: Run Pytest
+              run: |
                   . "${HOME}/test-env/bin/activate"
                   cd "$WORKSPACE"
                   python3 -m pytest
